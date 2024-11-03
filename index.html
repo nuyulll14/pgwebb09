@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Form Input</title>
+</head>
+
+<body>
+    <h2>Form Input</h2>
+    <form action="/pgweb/acaratujuh/input.php" onsubmit="return validateForm()" method="post">
+        <label for="kecamatan">Kecamatan:</label><br>
+        <input type="text" id="kecamatan" name="kecamatan" required><br>
+
+        <label for="longitude">Longitude:</label><br>
+        <input type="text" id="longitude" name="longitude" required><br>
+
+        <label for="latitude">Latitude:</label><br>
+        <input type="text" id="latitude" name="latitude" required><br>
+
+        <label for="luas">Luas:</label><br>
+        <input type="text" id="luas" name="luas" required><br>
+
+        <label for="jumlah_penduduk">Jumlah Penduduk:</label><br>
+        <input type="text" id="jumlah_penduduk" name="jumlah_penduduk" required><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+    <p id="informasi" style="color:red;"></p>
+
+    <script>
+        function validateForm() {
+            let kecamatan = document.getElementById("kecamatan").value.trim();
+            let longitude = document.getElementById("longitude").value.trim();
+            let latitude = document.getElementById("latitude").value.trim();
+            let luas = document.getElementById("luas").value.trim();
+            let jumlahPenduduk = document.getElementById("jumlah_penduduk").value.trim();
+            let text = "";
+
+            // Check if all fields are filled
+            if (!kecamatan || !longitude || !latitude || !luas || !jumlahPenduduk) {
+                text = "Semua field harus diisi.";
+                document.getElementById("informasi").innerHTML = text;
+                return false; // Prevent form submission if validation fails
+            }
+
+            // Check if 'luas' and 'jumlah penduduk' are numbers and greater than 0
+            if (isNaN(luas) || luas < 1) {
+                text = "Data luas harus angka dan tidak boleh bernilai negatif.";
+                document.getElementById("informasi").innerHTML = text;
+                return false; // Prevent form submission if validation fails
+            }
+
+            if (isNaN(jumlahPenduduk) || jumlahPenduduk < 1) {
+                text = "Jumlah penduduk harus angka dan tidak boleh bernilai negatif.";
+                document.getElementById("informasi").innerHTML = text;
+                return false; // Prevent form submission if validation fails
+            }
+
+            // Optional: Validate longitude and latitude ranges
+            if (isNaN(longitude) || longitude < -180 || longitude > 180) {
+                text = "Longitude harus antara -180 dan 180.";
+                document.getElementById("informasi").innerHTML = text;
+                return false; // Prevent form submission if validation fails
+            }
+
+            if (isNaN(latitude) || latitude < -90 || latitude > 90) {
+                text = "Latitude harus antara -90 dan 90.";
+                document.getElementById("informasi").innerHTML = text;
+                return false; // Prevent form submission if validation fails
+            }
+
+            document.getElementById("informasi").innerHTML = ""; // Clear any previous error message
+            return true; // Allow form submission if validation passes
+        }
+    </script>
+</body>
+
+</html>
